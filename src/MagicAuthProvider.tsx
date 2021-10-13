@@ -12,7 +12,10 @@ let magicInstance: SDKBase;
  * To solve this, we just init magic lazily
  * @returns
  */
-function getMagicInstance(magicApiKey: string, magicOptions?: MagicSDKAdditionalConfiguration): SDKBase {
+function getMagicInstance(
+  magicApiKey: string,
+  magicOptions?: MagicSDKAdditionalConfiguration
+): SDKBase {
   if (!magicInstance) {
     magicInstance = new Magic(magicApiKey, magicOptions);
   }
@@ -22,30 +25,39 @@ function getMagicInstance(magicApiKey: string, magicOptions?: MagicSDKAdditional
 export default function MagicAuthProvider({
   children,
   magicApiKey,
-  magicOptions
+  magicOptions,
 }: {
   children: React.ReactNode;
   magicApiKey: string;
-  magicOptions?: MagicSDKAdditionalConfiguration
+  magicOptions?: MagicSDKAdditionalConfiguration;
 }): JSX.Element {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [magicDIDToken, setmagicDIDToken] = useState<string | null>(null);
   const [currentUserEmail, setcurrentUserEmail] = useState<string | null>(null);
-  const [attemptingReauthentication, setAttemptingReauthentication] = useState<boolean>(false);
+  const [attemptingReauthentication, setAttemptingReauthentication] =
+    useState<boolean>(false);
 
-  const loginWithMagicLink = async (config : LoginWithMagicLinkConfiguration) => {
+  const loginWithMagicLink = async (
+    config: LoginWithMagicLinkConfiguration
+  ) => {
     let jwt;
     try {
       // This promise doesn't resolve until the email has been verified by the user
       // If successful, jwt will be a 15-minute active jwt that can be used to authorize requests
-      jwt = await getMagicInstance(magicApiKey, magicOptions).auth.loginWithMagicLink(config);
+      jwt = await getMagicInstance(
+        magicApiKey,
+        magicOptions
+      ).auth.loginWithMagicLink(config);
     } catch (e) {
       console.error('Error getting magic jwt', e);
       return null;
     }
     setIsLoggedIn(true);
     setmagicDIDToken(jwt);
-    const metadata = await getMagicInstance(magicApiKey, magicOptions).user.getMetadata();
+    const metadata = await getMagicInstance(
+      magicApiKey,
+      magicOptions
+    ).user.getMetadata();
     setcurrentUserEmail(metadata.email);
     return jwt;
   };
@@ -63,28 +75,44 @@ export default function MagicAuthProvider({
     (async () => {
       let alreadyLoggedIn: boolean;
       try {
-        alreadyLoggedIn = await getMagicInstance(magicApiKey, magicOptions).user.isLoggedIn();
+        alreadyLoggedIn = await getMagicInstance(
+          magicApiKey,
+          magicOptions
+        ).user.isLoggedIn();
       } catch (e) {
         console.error('Caught error attempting to reauthenticate user.', e);
         alreadyLoggedIn = false;
       }
 
       if (alreadyLoggedIn) {
-        const jwt = await getMagicInstance(magicApiKey, magicOptions).user.getIdToken();
+        const jwt = await getMagicInstance(
+          magicApiKey,
+          magicOptions
+        ).user.getIdToken();
         setIsLoggedIn(true);
         setmagicDIDToken(jwt);
-        const metadata = await getMagicInstance(magicApiKey, magicOptions).user.getMetadata();
+        const metadata = await getMagicInstance(
+          magicApiKey,
+          magicOptions
+        ).user.getMetadata();
         setcurrentUserEmail(metadata.email);
       }
 
       setAttemptingReauthentication(false);
     })();
-  }, []); // TODO - magicApiKey and magicOptions are technically dependencies but should never change and might require some teardown
+  }, [magicApiKey, magicOptions]); // magicApiKey and magicOptions are technically dependencies but should never change. Proper handling of a config that changes would require some teardown
 
   return (
     <>
       <MagicAuthContext.Provider
-        value={{ isLoggedIn, currentUserEmail, magicDIDToken, loginWithMagicLink, logout, attemptingReauthentication }}
+        value={{
+          isLoggedIn,
+          currentUserEmail,
+          magicDIDToken,
+          loginWithMagicLink,
+          logout,
+          attemptingReauthentication,
+        }}
       >
         {children}
       </MagicAuthContext.Provider>

@@ -1,8 +1,9 @@
-import { MagicAuthContext } from "./MagicAuthContext";
-export { MagicAuthContext }
+import { MagicAuthContext } from './MagicAuthContext';
 
-import MagicAuthProvider from "./MagicAuthProvider";
-export { MagicAuthProvider }
+import MagicAuthProvider from './MagicAuthProvider';
 
-import { useMagicAuth } from "./useMagicAuth";
-export { useMagicAuth }
+import { useMagicAuth } from './useMagicAuth';
+
+export { MagicAuthContext };
+export { MagicAuthProvider };
+export { useMagicAuth };
