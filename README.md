@@ -1,7 +1,7 @@
 # magic-auth-context
 A react context and hook that provides [Magic.link](https://magic.link/) functionality across your app.
 
-```jsx
+```tsx
 import { useMagicAuth } from 'magic-auth-context';
 
 // Inside your component
@@ -39,8 +39,8 @@ Configure the library by wrapping your application in `MagicAuthProvider`, and p
 
 For example, in an app where you're calling `ReactDOM.render()` yourself:
 
-```jsx
-// src/index.jsx
+```tsx
+// src/index.tsx
 import React from "react"
 import ReactDOM from "react-dom"
 import { AuthProvider } from "react-oidc-context"
@@ -56,8 +56,8 @@ ReactDOM.render(
 
 Then you can use the `useMagicAuth` hook in your components to access authentication state (`isLoggedIn`, `attemptingReauthentication`, `currentUserEmail`, and `magicJWT`) and authentication methods (`loginWithMagicLink()` and `logout()`).
 
-```jsx
-// src/ComponentThatUsesAuth.jsx
+```tsx
+// src/ComponentThatUsesAuth.tsx
 
 function ComponentThatUsesAuth() {
     const { isLoggedIn, currentUserEmail, attemptingReauthentication, logout, loginWithMagicLink } = useMagicAuth();
