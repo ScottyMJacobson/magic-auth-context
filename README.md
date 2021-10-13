@@ -43,7 +43,7 @@ For example, in an app where you're calling `ReactDOM.render()` yourself:
 // src/index.tsx
 import React from "react"
 import ReactDOM from "react-dom"
-import { AuthProvider } from "react-oidc-context"
+import { MagicAuthProvider } from "magic-auth-context"
 import App from "./App"
 
 ReactDOM.render(
