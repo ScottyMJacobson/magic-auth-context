@@ -1,6 +1,19 @@
 # magic-auth-context
 A react context and hook that provides [Magic.link](https://magic.link/) functionality across your app.
 
+```jsx
+import { useMagicAuth } from 'magic-auth-context';
+
+// Inside your component
+const { loginWithMagicLink } = useMagicAuth();
+// ... somewhere further down in that component
+const magicToken = await loginWithMagicLink({ email })
+
+// Inside another component
+const { currentUserEmail } = useMagicAuth();
+return `Hello, ${currentUserEmail}!`;
+```
+
 ## Features
 
 - 3-line integration
