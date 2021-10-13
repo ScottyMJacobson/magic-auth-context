@@ -83,6 +83,7 @@ function ComponentThatUsesAuth() {
 
 ## TODOs
 
+- More sensible exposing of metadata - perhaps `metadata` object vs `currentUserEmail` string
 - Handle Magic errors
 - Configure whether to automatically attempt to re-authenticate on startup
     - Security considerations around shared computers / persistent sessions
