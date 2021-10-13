@@ -1,4 +1,4 @@
 module.exports = {
-    testEnvironment: "jsdom",
-    transformIgnorePatterns: ["node_modules/(?!(p-defer))/"]
-}
+  testEnvironment: 'jsdom',
+  transformIgnorePatterns: ['node_modules/(?!(p-defer))/'],
+};

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { MagicAuthContext } from './MagicAuthContext';
 import { Magic } from 'magic-sdk';
 import { LoginWithMagicLinkConfiguration } from '@magic-sdk/types';
 import { MagicSDKAdditionalConfiguration, SDKBase } from '@magic-sdk/provider'; // Types
+import useDeepCompareEffect from 'use-deep-compare-effect';
 
 let magicInstance: SDKBase;
 
@@ -25,7 +26,7 @@ function getMagicInstance(
 export default function MagicAuthProvider({
   children,
   magicApiKey,
-  magicOptions,
+  magicOptions = {},
 }: {
   children: React.ReactNode;
   magicApiKey: string;
@@ -70,31 +71,24 @@ export default function MagicAuthProvider({
   };
 
   // Attempt to re-authenticate the magic user automatically on init - magic sessions are good for 7 days https://magic.link/docs/client-sdk/web/examples/reauthenticating-users
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     setAttemptingReauthentication(true);
     (async () => {
+      const magicInstance = getMagicInstance(magicApiKey, magicOptions);
+
       let alreadyLoggedIn: boolean;
       try {
-        alreadyLoggedIn = await getMagicInstance(
-          magicApiKey,
-          magicOptions
-        ).user.isLoggedIn();
+        alreadyLoggedIn = await magicInstance.user.isLoggedIn();
       } catch (e) {
         console.error('Caught error attempting to reauthenticate user.', e);
         alreadyLoggedIn = false;
       }
 
       if (alreadyLoggedIn) {
-        const jwt = await getMagicInstance(
-          magicApiKey,
-          magicOptions
-        ).user.getIdToken();
+        const jwt = await magicInstance.user.getIdToken();
         setIsLoggedIn(true);
         setmagicDIDToken(jwt);
-        const metadata = await getMagicInstance(
-          magicApiKey,
-          magicOptions
-        ).user.getMetadata();
+        const metadata = await magicInstance.user.getMetadata();
         setcurrentUserEmail(metadata.email);
       }
 

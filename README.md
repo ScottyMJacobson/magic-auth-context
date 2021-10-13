@@ -104,6 +104,7 @@ function ComponentThatUsesAuth() {
 - Add Magic.link API key screenshot
 - Refresh DIDToken when it expires
 - Handle changing config e.g. `magicApiKey` and `magicOptions`
+- Test auto-reauthentication functionality
 
 ## Influences
 

@@ -30,15 +30,24 @@ describe('MagicAuthProvider', () => {
       } = useMagicAuth();
       const [resolvedJWT, setResolvedJWT] = React.useState<string | null>();
 
+      // Hacky way to prevent issues with useEffect getting called on dependency changes / infinite loops - see
+      const [_deferredLoginPromise] =
+        React.useState<Promise<unknown>>(deferredLoginPromise);
+      const [_loginWithMagicLink] = React.useState<typeof loginWithMagicLink>(
+        () => loginWithMagicLink
+      );
+
       logoutFromContext = logout;
 
       React.useEffect(() => {
         (async () => {
-          await deferredLoginPromise;
-          const jwt = await loginWithMagicLink({ email: 'fakeemail@mail.com' });
+          await _deferredLoginPromise;
+          const jwt = await _loginWithMagicLink({
+            email: 'fakeemail@mail.com',
+          });
           setResolvedJWT(jwt);
         })();
-      }, [deferredLoginPromise, loginWithMagicLink]); // These deps will never change
+      }, [_deferredLoginPromise, _loginWithMagicLink]); // "State"-ified versions of props so they never change - see note above
 
       return (
         <div>
@@ -64,6 +73,7 @@ describe('MagicAuthProvider', () => {
         <App deferredLoginPromise={deferredLoginPromise} />
       </MagicAuthProvider>
     );
+
     render(tree);
 
     expect(
