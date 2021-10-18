@@ -97,6 +97,7 @@ function ComponentThatUsesAuth() {
 ## TODOs
 
 - Handle Magic errors
+- Tests for example/ app
 - Configure whether to automatically attempt to re-authenticate on startup
     - Security considerations around shared computers / persistent sessions
 - Support `loginWithSMS()`
