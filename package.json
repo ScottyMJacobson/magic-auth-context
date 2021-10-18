@@ -1,6 +1,6 @@
 {
   "name": "magic-auth-context",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A react context and hook that provide Magic.link functionality across your app.",
   "repository": {
     "type": "git",
