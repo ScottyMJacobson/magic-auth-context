@@ -2,21 +2,28 @@
 A react context and hook that provides [Magic.link](https://magic.link/) functionality across your app.
 
 ```tsx
+// Wrap your app...
+import { MagicAuthProvider } from 'magic-auth-context';
+<MagicAuthProvider>
+  <App />
+</MagicAuthProvider>
+
+// You're now free to use the hook wherever...
 import { useMagicAuth } from 'magic-auth-context';
 
-// Inside your component
+// Inside some component that prompts the login flow
 const { loginWithMagicLink } = useMagicAuth();
 // ... somewhere further down in that component
 const magicToken = await loginWithMagicLink({ email })
 
-// Inside another component
+// Inside another component that shows the user
 const { metadata } = useMagicAuth();
 return `Hello, ${metadata?.email}!`;
 ```
 
 ## Features
 
-- 3-line integration
+- 5-line integration
 - Supports React [hooks](https://reactjs.org/docs/hooks-intro.html).
 - Built with TypeScript, so includes TS types.
 - Since Magic.link [maintains a user's session for 7 days](https://magic.link/docs/api-reference/client-side-sdks/web#re-authenticate-users), `magic-auth-context` automatically attempts to re-authenticate on startup if a user is already logged into your app.
