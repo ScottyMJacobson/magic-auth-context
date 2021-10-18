@@ -54,7 +54,7 @@ ReactDOM.render(
 );
 ```
 
-Then you can use the `useMagicAuth` hook in your components to access authentication state (`isLoggedIn`, `attemptingReauthentication`, `currentUserEmail`, and `magicJWT`) and authentication methods (`loginWithMagicLink()` and `logout()`).
+Then you can use the `useMagicAuth` hook in your components to access authentication state (`isLoggedIn`, `attemptingReauthentication`, `currentUserEmail`, and `magicDIDToken`) and authentication methods (`loginWithMagicLink()` and `logout()`).
 
 ```tsx
 // src/ComponentThatUsesAuth.tsx
