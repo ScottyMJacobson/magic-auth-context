@@ -10,8 +10,8 @@ const { loginWithMagicLink } = useMagicAuth();
 const magicToken = await loginWithMagicLink({ email })
 
 // Inside another component
-const { currentUserEmail } = useMagicAuth();
-return `Hello, ${currentUserEmail}!`;
+const { metadata } = useMagicAuth();
+return `Hello, ${metadata?.email}!`;
 ```
 
 ## Features
@@ -54,13 +54,13 @@ ReactDOM.render(
 );
 ```
 
-Then you can use the `useMagicAuth` hook in your components to access authentication state (`isLoggedIn`, `attemptingReauthentication`, `currentUserEmail`, and `magicDIDToken`) and authentication methods (`loginWithMagicLink()` and `logout()`).
+Then you can use the `useMagicAuth` hook in your components to access authentication state (`isLoggedIn`, `attemptingReauthentication`, `metadata`, and `magicDIDToken`) and authentication methods (`loginWithMagicLink()` and `logout()`).
 
 ```tsx
 // src/ComponentThatUsesAuth.tsx
 
 function ComponentThatUsesAuth() {
-    const { isLoggedIn, currentUserEmail, attemptingReauthentication, logout, loginWithMagicLink } = useMagicAuth();
+    const { isLoggedIn, metadata, attemptingReauthentication, logout, loginWithMagicLink } = useMagicAuth();
     const [emailValue, setEmailValue] = React.useState<string>('');
 
     if (attemptingReauthentication) {
@@ -70,7 +70,7 @@ function ComponentThatUsesAuth() {
     if (isLoggedIn) {
         return (
             <div>
-                Hello {currentUserEmail}{" "}
+                Hello {metadata?.email}{" "}
                 <br />
                 <button onClick={logout}>
                     Log out
@@ -96,13 +96,12 @@ function ComponentThatUsesAuth() {
 
 ## TODOs
 
-- More sensible exposing of metadata - perhaps `metadata` object vs `currentUserEmail` string
 - Handle Magic errors
 - Configure whether to automatically attempt to re-authenticate on startup
     - Security considerations around shared computers / persistent sessions
 - Support `loginWithSMS()`
 - Add Magic.link API key screenshot
-- Refresh DIDToken when it expires
+- Refresh `magicDIDToken` when it expires
 - Handle changing config e.g. `magicApiKey` and `magicOptions`
 - Test auto-reauthentication functionality
 

@@ -38,11 +38,11 @@
   "size-limit": [
     {
       "path": "dist/magic-auth-context.cjs.production.min.js",
-      "limit": "10 KB"
+      "limit": "35 KB"
     },
     {
       "path": "dist/magic-auth-context.esm.js",
-      "limit": "10 KB"
+      "limit": "35 KB"
     }
   ],
   "devDependencies": {
