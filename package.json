@@ -1,7 +1,13 @@
 {
   "name": "magic-auth-context",
-  "author": "Scotty Jacobson",
   "version": "0.2.0",
+  "description": "A react context and hook that provide Magic.link functionality across your app.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com:ScottyMJacobson/magic-auth-context.git"
+  },
+  "homepage": "https://github.com/ScottyMJacobson/magic-auth-context#readme",
+  "author": "Scotty Jacobson",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -12,6 +18,15 @@
   "engines": {
     "node": ">=10"
   },
+  "keywords": [
+    "authentication",
+    "context-api",
+    "magic",
+    "passwordless authentication",
+    "magic.link",
+    "magic email",
+    "react-component"
+  ],
   "scripts": {
     "start": "dts watch",
     "build": "dts build",
