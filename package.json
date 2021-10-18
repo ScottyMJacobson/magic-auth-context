@@ -1,11 +1,13 @@
 {
-  "version": "0.1.0",
+  "name": "magic-auth-context",
+  "author": "Scotty Jacobson",
+  "version": "0.0.0",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "module": "dist/magic-auth-context.esm.js",
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "engines": {
     "node": ">=10"
@@ -33,9 +35,6 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "magic-auth-context",
-  "author": "Scotty Jacobson",
-  "module": "dist/magic-auth-context.esm.js",
   "size-limit": [
     {
       "path": "dist/magic-auth-context.cjs.production.min.js",
