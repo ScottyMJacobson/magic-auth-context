@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { MagicAuthContext } from './MagicAuthContext';
 import { Magic } from 'magic-sdk';
-import { LoginWithMagicLinkConfiguration } from '@magic-sdk/types';
+import {
+  LoginWithMagicLinkConfiguration,
+  MagicUserMetadata,
+} from '@magic-sdk/types';
 import { MagicSDKAdditionalConfiguration, SDKBase } from '@magic-sdk/provider'; // Types
 import useDeepCompareEffect from 'use-deep-compare-effect';
 
@@ -34,7 +37,7 @@ export default function MagicAuthProvider({
 }): JSX.Element {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [magicDIDToken, setmagicDIDToken] = useState<string | null>(null);
-  const [currentUserEmail, setcurrentUserEmail] = useState<string | null>(null);
+  const [metadata, setMetadata] = useState<MagicUserMetadata | null>(null);
   const [attemptingReauthentication, setAttemptingReauthentication] =
     useState<boolean>(false);
 
@@ -59,7 +62,7 @@ export default function MagicAuthProvider({
       magicApiKey,
       magicOptions
     ).user.getMetadata();
-    setcurrentUserEmail(metadata.email);
+    setMetadata(metadata);
     return jwt;
   };
 
@@ -67,7 +70,7 @@ export default function MagicAuthProvider({
     await getMagicInstance(magicApiKey, magicOptions).user.logout();
     setIsLoggedIn(false);
     setmagicDIDToken(null);
-    setcurrentUserEmail(null);
+    setMetadata(null);
   };
 
   // Attempt to re-authenticate the magic user automatically on init - magic sessions are good for 7 days https://magic.link/docs/client-sdk/web/examples/reauthenticating-users
@@ -89,7 +92,7 @@ export default function MagicAuthProvider({
         setIsLoggedIn(true);
         setmagicDIDToken(jwt);
         const metadata = await magicInstance.user.getMetadata();
-        setcurrentUserEmail(metadata.email);
+        setMetadata(metadata);
       }
 
       setAttemptingReauthentication(false);
@@ -101,7 +104,7 @@ export default function MagicAuthProvider({
       <MagicAuthContext.Provider
         value={{
           isLoggedIn,
-          currentUserEmail,
+          metadata,
           magicDIDToken,
           loginWithMagicLink,
           logout,

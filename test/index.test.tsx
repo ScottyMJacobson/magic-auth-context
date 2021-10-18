@@ -11,7 +11,7 @@ describe('MagicAuthProvider', () => {
   it(`Gives child elements access to a MagicAuthContext that provides:
   - isLoggedIn, which is false until login
   - loginWithMagicLink() method 
-  - after login, provides isLoggedIn === true and currentUserEmail info
+  - after login, provides isLoggedIn === true and metadata info
   - provides logout() method
   - after logout, isLoggedIn === false, and info is null`, async () => {
     let logoutFromContext = () => Promise.resolve();
@@ -24,7 +24,7 @@ describe('MagicAuthProvider', () => {
       const {
         loginWithMagicLink,
         isLoggedIn,
-        currentUserEmail,
+        metadata,
         magicDIDToken,
         logout,
       } = useMagicAuth();
@@ -55,7 +55,7 @@ describe('MagicAuthProvider', () => {
           <br />
           {`resolvedJWT is ${resolvedJWT}`}
           <br />
-          {`currentUserEmail is ${currentUserEmail}`}
+          {`metadata.email is ${metadata?.email}`}
           <br />
           {`magicDIDToken is ${magicDIDToken}`}
         </div>
@@ -86,7 +86,7 @@ describe('MagicAuthProvider', () => {
       await screen.findByText('isLoggedIn is true', { exact: false })
     ).toBeInTheDocument(); // `find` instead of `get` because it might be slightly asynchronous
     expect(
-      await screen.findByText('currentUserEmail is fakeemail@mail.com', {
+      await screen.findByText('metadata.email is fakeemail@mail.com', {
         exact: false,
       })
     ).toBeInTheDocument(); // `find` instead of `get` because it might be slightly asynchronous

@@ -1,5 +1,8 @@
 import React from 'react';
-import { LoginWithMagicLinkConfiguration } from '@magic-sdk/types';
+import {
+  LoginWithMagicLinkConfiguration,
+  MagicUserMetadata,
+} from '@magic-sdk/types';
 
 export interface MagicAuthContextProps {
   /**
@@ -20,7 +23,7 @@ export interface MagicAuthContextProps {
   ) => Promise<string | null>;
   logout: () => Promise<void>;
   isLoggedIn: boolean;
-  currentUserEmail: string | null;
+  metadata: MagicUserMetadata | null;
   attemptingReauthentication: boolean;
   magicDIDToken: string | null;
 }
