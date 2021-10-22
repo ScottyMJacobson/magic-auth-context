@@ -42,6 +42,8 @@ For a working example - look at the example app included at `example/`.
 
 First, get your [Magic.link](https://dashboard.magic.link/) public API key.
 
+![Magic API Key](https://user-images.githubusercontent.com/8656857/138496734-2ab5b2d3-130d-428f-a6e5-6eaea69d2571.png)
+
 Configure the library by wrapping your application in `MagicAuthProvider`, and providing this `magicApiKey`.
 
 For example, in an app where you're calling `ReactDOM.render()` yourself:
@@ -60,6 +62,7 @@ ReactDOM.render(
     document.getElementById('app')
 );
 ```
+_(In production apps I'd recommend using an env variable)_
 
 Then you can use the `useMagicAuth` hook in your components to access authentication state (`isLoggedIn`, `attemptingReauthentication`, `metadata`, and `magicDIDToken`) and authentication methods (`loginWithMagicLink()` and `logout()`).
 
@@ -100,18 +103,6 @@ function ComponentThatUsesAuth() {
     </form>
 }
 ```
-
-## TODOs
-
-- Handle Magic errors
-- Tests for example/ app
-- Configure whether to automatically attempt to re-authenticate on startup
-    - Security considerations around shared computers / persistent sessions
-- Support `loginWithSMS()`
-- Add Magic.link API key screenshot
-- Refresh `magicDIDToken` when it expires
-- Handle changing config e.g. `magicApiKey` and `magicOptions`
-- Test auto-reauthentication functionality
 
 ## Influences
 

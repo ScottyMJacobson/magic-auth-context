@@ -25,6 +25,16 @@ export interface MagicAuthContextProps {
   isLoggedIn: boolean;
   metadata: MagicUserMetadata | null;
   attemptingReauthentication: boolean;
+  /**
+   * Decentralized ID token with a default 15-minute lifespan returned by loginWithMagicLink() method.
+   *
+   * `null` when user is not logged in.
+   *
+   * See: https://magic.link/docs/api-reference/client-side-sdks/web#loginwithmagiclink
+   *
+   * @type {(string | null)}
+   * @memberof MagicAuthContextProps
+   */
   magicDIDToken: string | null;
 }
 
